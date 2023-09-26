@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Grandiflora+One&display=swap');
+@import './Theme.scss';
+
+@mixin mobile {
+    @media (max-width: 768px) {
+        @content;
+    }
+}
+
+@keyframes shareSlideIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.share-modal {
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(144, 144, 144, 0.7);
+
+    .share-modal-background {
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .share-modal-content {
+            @include mobile() {
+                width: 80%;
+            }
+
+            width: 30%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 1.2em;
+            transform: translate(-50%, -50%);
+            background-color: whitesmoke;
+            border: 1px solid rgb(71, 71, 71);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+            border-radius: 10px;
+            animation: modalSlideIn 0.5s ease forwards;
+
+            .share-close {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+                transition: all 0.3s;
+
+                &:hover {
+                    box-sizing: border-box;
+                    scale: 1.5;
+                }
+            }
+
+            .share-date {
+                font-size: 1.2em;
+                font-weight: bold;
+                padding: 15px;
+            }
+
+            .share-formattedDate {
+                font-size: 0.8em;
+                text-align: right;
+                padding: 0px 20px;
+                margin-bottom: 20px;
+            }
+
+            .share-title {
+                font-size: 1.2em;
+                font-weight: bold;
+                padding: 15px;
+            }
+
+            .share-title-todo {
+                font-size: 0.8em;
+                text-align: right;
+                padding: 0px 20px;
+                margin-bottom: 20px;
+            }
+
+            .share-period {
+                font-size: 1.2em;
+                font-weight: bold;
+                padding: 15px;
+            }
+
+            .share-todo-period {
+                font-size: 0.8em;
+                text-align: right;
+                padding: 0px 20px;
+                margin-bottom: 20px;
+            }
+
+            .share-content {
+                font-size: 1.2em;
+                font-weight: bold;
+                padding: 15px;
+            }
+
+            .share-todo-content {
+                font-size: 0.8em;
+                text-align: justify;
+                padding: 0px 20px;
+                margin-bottom: 20px;
+            }
+
+            .share-state {
+                font-size: 1.2em;
+                font-weight: bold;
+                padding: 15px;
+            }
+
+            .share-todo-state {
+                font-size: 0.8em;
+                text-align: right;
+                padding: 10px 20px;
+                margin-bottom: 20px;
+
+                &.New {
+                    background-color: $BGC-New;
+                    box-shadow: 0px 0px 20px $BGC-New;
+                }
+
+                &.Progress {
+                    background-color: $BGC-Progress;
+                    box-shadow: 0px 0px 20px $BGC-Progress;
+                }
+
+                &.Complete {
+                    background-color: $BGC-Complete;
+                    box-shadow: 0px 0px 20px $BGC-Complete;
+                }
+            }
+
+            .share-with {
+                font-size: 1.2em;
+                font-weight: bold;
+                padding: 15px;
+            }
+
+            .share-with-input {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .share-with-id {
+                    padding: 10px;
+                    width: 80%;
+                    outline: none;
+                    border: none;
+                    transition: all 0.3s;
+
+                    &:hover {
+                        box-shadow: 0px 0px 5px $BlueBorder;
+                    }
+
+                    &:focus {
+                        box-shadow: 0px 0px 5px $BlueBorder;
+                    }
+                }
+            }
+
+            .id-noCheck {
+                display: none;
+            }
+
+            .id-check {
+                transition: all 0.3s;
+
+                &.exist {
+                    font-size: 0.5em;
+                    color: blue;
+                    font-weight: blud;
+                    text-align: left;
+                    margin-left: 30px;
+                    margin-bottom: 20px;
+                    transition: all 0.3s;
+                }
+
+                &.no-exist {
+                    font-size: 0.5em;
+                    color: red;
+                    font-weight: blud;
+                    text-align: left;
+                    margin-left: 30px;
+                    margin-bottom: 20px;
+                    transition: all 0.3s;
+                }
+            }
+
+            .share-button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                svg {
+                    margin-top: 20px;
+                    border: none;
+                    background-color: rgba(76, 144, 72, 0.5);
+                    padding: 10px 50px;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    border-radius: 50px;
+
+                    &:hover {
+                        background-color: rgba(50, 95, 47, 0.8);
+                        scale: 1.1;
+                    }
+                }
+            }
+        }
+    }
+}

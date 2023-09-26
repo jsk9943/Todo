@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Grandiflora+One&display=swap');
+@import './Theme.scss';
+
+@mixin mobile {
+    @media (max-width: 768px) {
+        @content;
+    }
+}
+
+
+.noti-container {
+    position: fixed;
+    width: 100%;
+    height: 15px;
+    top: 0;
+
+    &.state-null {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .state-container {
+        display: flex;
+        height:100%;
+
+        .new-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow:hidden;
+            font-size: 0.5em;
+            font-weight: bold;
+            height:100%;
+            text-align: center;
+            white-space: nowrap;
+            background-color: $BGC-New;
+        }
+
+        .prog-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow:hidden;
+            font-size: 0.5em;
+            font-weight: bold;
+            height:100%;
+            text-align: center;
+            white-space: nowrap;
+            background-color: $BGC-Progress;
+        }
+
+        .comp-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow:hidden;
+            font-size: 0.5em;
+            font-weight: bold;
+            height:100%;
+            text-align: center;
+            white-space: nowrap;
+            background-color: $BGC-Complete;
+        }
+
+    }
+}

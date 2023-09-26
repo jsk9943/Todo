@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Grandiflora+One&display=swap');
+@import './Theme.scss';
+
+@mixin mobile {
+    @media (max-width: 768px) {
+        @content;
+    }
+}
+
+@keyframes modalSlideIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+@keyframes newChangeColor {
+    0% {
+        background-color: $BGC-New;
+    }
+
+    100% {
+        background-color: rgba(93, 255, 166, 0.5);
+    }
+}
+
+@keyframes progressChangeColor {
+    0% {
+        background-color: $BGC-Progress;
+    }
+
+    100% {
+        background-color: rgba(153, 189, 255, 0.5);
+    }
+}
+
+.list {
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(144, 144, 144, 0.7);
+
+    .list-background {
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .prev-day {
+            @include mobile() {
+                width: 10%;
+                height: 300px;
+                left: 0%;
+                transform: translate(0%, -50%);
+            }
+
+            position: absolute;
+            width: 100px;
+            height: 200px;
+            top: 50%;
+            left: 15%;
+            transform: translate(-50%, -50%);
+
+            &.stop {
+                opacity: 0;
+
+                svg {
+                    cursor: auto;
+                }
+            }
+
+            svg {
+                width: 100%;
+                height: 100%;
+                transition: all 0.3s;
+                opacity: 0.3;
+                cursor: pointer;
+
+                &:hover {
+                    @include mobile() {
+                        scale: 1.5;
+                    }
+
+                    opacity: 0.7;
+                    scale: 1.2;
+                }
+            }
+
+        }
+
+        .next-day {
+            @include mobile() {
+                width: 10%;
+                height: 300px;
+                right: 0%;
+                transform: translate(0%, -50%);
+            }
+
+            position: absolute;
+            width: 100px;
+            height: 200px;
+            top: 50%;
+            right: 15%;
+            transform: translate(50%, -50%);
+
+            &.stop {
+                opacity: 0;
+
+                svg {
+                    cursor: auto;
+                }
+            }
+
+            svg {
+                width: 100%;
+                height: 100%;
+                transition: all 0.3s;
+                opacity: 0.3;
+                cursor: pointer;
+
+                &:hover {
+                    @include mobile() {
+                        scale: 1.5;
+                    }
+
+                    opacity: 0.7;
+                    scale: 1.2;
+                }
+            }
+        }
+
+        .cell-content {
+            @include mobile() {
+                width: 80%;
+            }
+
+            z-index: 10;
+            width: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 1.2em;
+            transform: translate(-50%, -50%);
+            background-color: whitesmoke;
+            border: 1px solid rgb(71, 71, 71);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+            border-radius: 10px;
+            animation: modalSlideIn 0.5s ease forwards;
+
+            .list-plus {
+                position: absolute;
+                top: 10px;
+                right: 50px;
+                cursor: pointer;
+                transition: all 0.3s;
+
+                &:hover {
+                    box-sizing: border-box;
+                    scale: 1.5;
+                }
+            }
+
+            .list-close {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+                transition: all 0.3s;
+
+                &:hover {
+                    box-sizing: border-box;
+                    scale: 1.5;
+                }
+
+            }
+
+            .cell-date {
+                @include mobile() {
+                    width: 40%;
+                }
+
+                width: 30%;
+                padding: 10px;
+                font-size: 0.8em;
+                text-align: center;
+                font-weight: bold;
+
+                .cell-date-day {
+                    font-size: 1.2em;
+                }
+            }
+
+            .cell-list {
+                div {
+                    .list-line {
+                        border: 2px solid rgba(128, 128, 128, 0.266);
+                        margin: 0;
+                    }
+
+                    .todo-list {
+                        overflow: hidden;
+                        padding: 20px;
+                        transition: all 0.3s;
+                        cursor: pointer;
+
+                        &.New {
+                            background-color: $BGC-New;
+
+                            &.today {
+                                animation: newChangeColor 0.3s infinite alternate;
+                            }
+                        }
+
+                        &.Progress {
+                            background-color: $BGC-Progress;
+
+                            &.today {
+                                animation: progressChangeColor 0.7s infinite alternate;
+                            }
+                        }
+
+                        &.Complete {
+                            background-color: $BGC-Complete;
+                        }
+
+                        &:hover {
+                            box-shadow: 0px 0px 5px $BlueBorder;
+                        }
+                    }
+
+                    .todo-index {
+                        width: 30%;
+                        float: left;
+                        font-size: 0.8em;
+                        font-weight: bold;
+                        font-family: $MainFont;
+                        color: $MainFontColor;
+                    }
+
+                    .todo-title {
+                        width: 70%;
+                        text-align: center;
+                        float: right;
+                        font-weight: bold;
+                        font-family: $MainFont;
+                        color: $MainFontColor;
+                    }
+
+
+                }
+
+                .error {
+                    padding: 20px;
+                    font-size: 1.5em;
+                    font-weight: bold;
+                    text-align: center;
+
+                    img {
+                        margin-top: 20px;
+                        width: 50%;
+                        vertical-align: bottom;
+                    }
+
+                    div {
+                        color: $MainFontColor;
+                        font-family: $MainFont;
+                        margin-top: 20px;
+                        font-size: 0.9em;
+                    }
+                }
+            }
+        }
+    }
+}

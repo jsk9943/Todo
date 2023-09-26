@@ -1,0 +1,429 @@
+@import url('https://fonts.googleapis.com/css2?family=Grandiflora+One&display=swap');
+@import './Theme.scss';
+
+@mixin mobile {
+    @media (max-width: 768px) {
+        @content;
+    }
+}
+
+@keyframes loginSlideIn {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes opacityIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes opacityOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes modalSlideIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+body {
+    margin: 0 auto;
+
+    section {
+        background-image: url('img/back.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: rgba(0, 0, 0, 0.455);
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .login-container {
+            @include mobile() {
+                width: 80%;
+            }
+
+            background-color: rgba(255, 255, 255, 0.6);
+            width: 35%;
+            text-align: center;
+            border-radius: 5px;
+            transition: all 0.3s;
+            animation: loginSlideIn 1s ease forwards;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.7);
+                box-shadow: 0 0 10px $BlueBorder;
+            }
+
+            .loginTitle {
+                padding: 40px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                span {
+                    font-weight: bold;
+                    font-size: 2em;
+                    letter-spacing: 5px;
+                    color: rgba(43, 0, 122, 0.647);
+                    font-family: $MainFont;
+                }
+            }
+
+            .loginID {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 30px;
+                padding: 10px 30px;
+
+                div {
+                    @include mobile {
+                        width: 30%;
+                    }
+
+                    font-weight: bold;
+                    width: 10vw;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                input {
+                    @include mobile {
+                        width: 70%;
+                    }
+
+                    font-size: 1.1em;
+                    height: 100%;
+                    width: 15vw;
+                    background-color: rgba(255, 255, 255, 0.6);
+                    border-radius: 5px;
+                    border: none;
+                    padding: 0px 10px;
+                    box-sizing: border-box;
+                    transition: all 0.3s;
+
+                    &:focus {
+                        font-weight: bold;
+                        background-color: rgba(255, 255, 255, 0.8);
+                        outline: none;
+                        box-shadow: 0 0 10px $BlueBorder;
+                    }
+                }
+            }
+
+            .loginPW {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 30px;
+                padding: 10px 30px;
+
+                div {
+                    @include mobile {
+                        width: 30%;
+                        font-size: 0.8em;
+                    }
+
+                    font-weight: bold;
+                    width: 10vw;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                input {
+                    font-size: 1.1em;
+                    height: 100%;
+                    width: 15vw;
+                    background-color: rgba(255, 255, 255, 0.6);
+                    border-radius: 5px;
+                    border: none;
+                    padding: 0px 10px;
+                    box-sizing: border-box;
+                    transition: all 0.3s;
+
+                    &:focus {
+                        font-weight: bold;
+                        background-color: rgba(255, 255, 255, 0.8);
+                        outline: none;
+                        box-shadow: 0 0 10px $BlueBorder;
+                    }
+
+                    @include mobile() {
+                        width: 70%;
+                    }
+                }
+            }
+
+            .saveID {
+                margin-top: 5px;
+                font-size: 0.8em;
+                font-weight: bold;
+
+                label {
+                    margin-left: 10px;
+                }
+            }
+
+            .buttonContainer {
+                z-index:10;
+                text-align: center;
+
+                button {
+                    margin-bottom: 30px;
+                    width: 60%;
+                    padding: 10px 40px;
+                    border-radius: 20px;
+                    border: none;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    letter-spacing: 10px;
+                    font-size: 1.2em;
+                    font-weight: bold;
+                    color: gray;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                    &:hover {
+                        color: white;
+                        box-shadow: 0 0 10px $BlueBorder;
+
+                        @media(hover:none) {
+                            color: gray;
+                            box-shadow: none;
+                        }
+                    }
+
+                    &:nth-child(1) {
+                        @include mobile {
+                            font-size: 0.8em;
+                        }
+
+                        margin-top: 30px;
+                        background-color: rgba(0, 177, 177, 0.573);
+                    }
+
+                    &:nth-child(1):hover {
+                        background-color: rgba(0, 202, 202, 0.925);
+                    }
+
+                    &:nth-child(2) {
+                        @include mobile {
+                            font-size: 0.8em;
+                        }
+
+                        letter-spacing: 5px;
+                        background-color: rgba(102, 172, 89, 0.573);
+                    }
+
+                    &:nth-child(2):hover {
+                        background-color: rgba(102, 172, 89, 0.925);
+                    }
+
+                }
+            }
+        }
+
+        .signupModal-active,
+        .signupModal-disappear {
+            z-index:5;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.4);
+            width: 100%;
+            height: 100vh;
+            transition: all 1s;
+
+            &.signupModal-active {
+                animation: opacityIn 1s ease forwards;
+            }
+
+            &.signupModal-disappear {
+                animation: opacityOut 0.5s ease forwards;
+            }
+
+            .modal-container {
+                @include mobile() {
+                    width: 70%;
+                }
+
+                position: absolute;
+                padding:40px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 30%;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+                background-color: white;
+                animation: modalSlideIn 0.5s ease forwards;
+
+                .closeModal {
+                    text-align: center;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    span {
+                        font-size: 2em;
+                        font-weight: bold;
+                        color: $MainFontColor;
+                        font-family: $MainFont;
+                    }
+
+                    svg {
+                        width: 10%;
+                        cursor: pointer;
+                        transition: all 0.3s;
+
+                        &:hover {
+                            scale: 1.2;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .modal-id-container {
+                    margin-top: 20px;
+
+                    div {
+                        font-weight: bold;
+                    }
+
+                    input {
+                        margin-top: 10px;
+                        width: 100%;
+                        height: 5vh;
+                        padding: 0px 10px;
+                        box-sizing: border-box;
+                        border: 1px solid rgba(128, 128, 128, 0.5);
+                        outline: none;
+                        font-size: 1em;
+                        transition: all 0.3s;
+                        border-radius: 5px;
+
+                        &:focus {
+                            font-weight: bold;
+                            box-shadow: 0 0 10px $BlueBorder;
+                        }
+                    }
+
+                    .id-validation {
+                        color: red;
+                        font-weight: bold;
+                        font-size: 0.8em;
+
+                        &.blue-text {
+                            color: blue;
+                        }
+                    }
+                }
+
+                .modal-pw-container {
+                    margin-top: 20px;
+
+                    div {
+                        font-weight: bold;
+                    }
+
+                    input {
+                        margin-top: 10px;
+                        width: 100%;
+                        height: 5vh;
+                        padding: 0px 10px;
+                        box-sizing: border-box;
+                        border: 1px solid rgba(128, 128, 128, 0.5);
+                        outline: none;
+                        font-size: 1em;
+                        transition: all 0.3s;
+                        border-radius: 5px;
+
+                        &:focus {
+                            font-weight: bold;
+                            box-shadow: 0 0 10px $BlueBorder;
+                        }
+                    }
+
+                    .pw-validation {
+                        color: red;
+                        font-weight: bold;
+                        font-size: 0.8em;
+
+                        &.blue-text {
+                            color: blue;
+                        }
+                    }
+                }
+
+                .modal-btn-container {
+                    margin-top: 40px;
+                    text-align: center;
+
+                    button {
+                        @include mobile() {
+                            font-size: 0.9em;
+                        }
+
+                        font-weight: bold;
+                        font-size: 1em;
+                        width: 80%;
+                        padding: 20px 40px;
+                        border-radius: 100px;
+                        border: none;
+                        cursor: pointer;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        transition: all 0.3s;
+                        background-color: rgba(128, 128, 128, 0.2);
+
+                        &:hover {
+                            background-color: rgba(128, 65, 65, 0.5);
+                            box-shadow: 0 0 10px $BlueBorder;
+
+                            @media (hover:none) {
+                                background-color: rgba(128, 128, 128, 0.2);
+                                box-shadow: none;
+                            }
+                        }
+
+                        &.btnTurnOff {
+                            cursor: not-allowed;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
