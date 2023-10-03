@@ -1,22 +1,28 @@
-import React, { FC, useState, useMemo } from 'react';
+import React, { FC, useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import { format, addMonths, subMonths } from 'date-fns';
 import { GrLogout, GrLinkNext, GrLinkPrevious } from 'react-icons/gr';
+import { BsSendCheck } from 'react-icons/bs';
 import axios from 'axios';
+import './Header.scss';
 
 interface HeaderProps {
-    cookies: { token?: string; };
     currentMonth: Date;
     setCurrentMonth: (date: Date) => void;
+    shareTodoCheck:boolean;
+    setShareTodoCheck: React.Dispatch<React.SetStateAction<boolean>>;
     prevMonth: () => void;
     nextMonth: () => void;
 }
 
-const Header: FC<HeaderProps> = ({ cookies, currentMonth, setCurrentMonth, prevMonth, nextMonth }) => {
+const Header: FC<HeaderProps> = ({ currentMonth, setCurrentMonth, shareTodoCheck, setShareTodoCheck, prevMonth, nextMonth }) => {
+    const [cookies] = useCookies(['token']);
+    const [shareDataCheck, setShareDataCheck] = useState<boolean>(null);
     const [touchStartX, setTouchStartX] = useState(null);
     const [, setTouchEndX] = useState(null);
     const navigate = useNavigate();
-    
+
     // 터치 이벤트
     const handleTouchStart = (e: React.TouchEvent) => {
         setTouchStartX(e.touches[0].clientX);
@@ -66,6 +72,22 @@ const Header: FC<HeaderProps> = ({ cookies, currentMonth, setCurrentMonth, prevM
             }
         }
     }
+    //쉐어 내용 열어보기
+    const shareTodoOpen = () => {
+        setShareTodoCheck(true);
+    }
+
+    useEffect(() => {
+        const fetch = async () => {
+            const response = await axios.get(`${process.env.REACT_APP_SERVER}/todo.share.get?loginId=${cookies.token.loginID}`);
+            if (!response.data) {
+                setShareDataCheck(response.data);
+            } else {
+                setShareDataCheck(response.data);
+            }
+        }
+        fetch();
+    }, [currentMonth, shareTodoCheck]);
 
     return (
         <div className="header row"
@@ -81,6 +103,10 @@ const Header: FC<HeaderProps> = ({ cookies, currentMonth, setCurrentMonth, prevM
                 </span>
             </div>
             <div className="col-end">
+                <BsSendCheck
+                    className={`shareCheckIcon ${shareDataCheck ? "true" : "false"}`}
+                    onClick={() => { shareTodoOpen(); }}
+                />
                 <GrLogout
                     size={50}
                     onClick={() => { logoutBtnClick(); }}
@@ -88,7 +114,7 @@ const Header: FC<HeaderProps> = ({ cookies, currentMonth, setCurrentMonth, prevM
                 <GrLinkPrevious
                     onClick={() => { prevMonthClick(); }}
                 />
-                <GrLinkNext 
+                <GrLinkNext
                     onClick={() => { nextMonthClick(); }}
                 />
             </div>

@@ -11,6 +11,7 @@ import CreateTodo from './CreateTodo';
 import ListModal from './ListModal';
 import Notification from './Notification';
 import ShareTodo from './ShareTodo';
+import ShareTodoCheck from './ShareTodoCheck';
 
 type TodoContents = {
     index: number;
@@ -72,6 +73,7 @@ const Calendar = () => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [shareOpen, setShareOpen] = useState<boolean>(false);
     const [createTodoOpen, setCreateTodoOpen] = useState<boolean>(false);
+    const [shareTodoCheck, setShareTodoCheck] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState(false);
     const [holiday, setHoliday] = useState(null);
     const holidayDataCountRef = useRef(null);
@@ -198,7 +200,7 @@ const Calendar = () => {
         return () => {
             window.removeEventListener('beforeunload', unloadHandler);
         };
-    }, [currentMonth, createTodoOpen, modalOpen]);
+    }, [currentMonth, createTodoOpen, modalOpen, shareTodoCheck]);
 
     // 공휴일 가져오기
     useEffect(() => {
@@ -246,9 +248,10 @@ const Calendar = () => {
                     onTouchEnd={handleTouchEnd}
                 >
                     <Header
-                        cookies={cookies}
                         currentMonth={currentMonth}
                         setCurrentMonth={setCurrentMonth}
+                        shareTodoCheck={shareTodoCheck}
+                        setShareTodoCheck={setShareTodoCheck}
                         prevMonth={prevMonth}
                         nextMonth={nextMonth}
                     />
@@ -307,6 +310,12 @@ const Calendar = () => {
                             setCreateTodoOpen={setCreateTodoOpen}
                         />
                     )}
+                    {shareTodoCheck &&
+                        <ShareTodoCheck
+                            currentMonth={currentMonth}
+                            setShareTodoCheck={setShareTodoCheck}
+                        />
+                    }
                 </div>
             </div>
 

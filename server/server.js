@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { todoRead, todoMonthRead, todoCreate, todoDelete, todoModify, moveTodoContents, todoStateChange } from './storage.js';
 import { memberLoginProcess, validityConfirm, memberExist, newMember, memberLogoutProcess } from './member.js';
-import { shareFileCreate } from './share.js';
+import { shareFileCreate, shareTodoExsits, shareTodoRead, shareTodoImportAndDelete } from './share.js';
 
 const app = express();
 const PORT = 9001;
@@ -136,8 +136,8 @@ app.patch('/todo.state', async (req, res) => {
 //공유받을 아이디 체크
 app.get('/todo.share', async (req, res) => {
     try {
-        const shareId = req.query.shareId
-        const result = await memberExist(shareId);
+        const shareID = req.query.shareID
+        const result = await memberExist(shareID);
         res.send(result ? true : false);
     } catch (error) {
         res.status(500).json({ error: '서버 오류' });
@@ -153,7 +153,50 @@ app.post('/todo.share', async (req, res) => {
         res.status(500).json({ error: '공유 오류' });
     }
 })
-//공유받은 데이터 확인
+//공유받은 데이터 있는지 확인
+app.get('/todo.share.get', async (req, res) => {
+    try {
+        const loginId = req.query.loginId
+        const result = await shareTodoExsits(loginId);
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({ error: '공유 가져오기' });
+    }
+})
+//공유받은 데이터 가져오기
+app.post('/todo.share.get', async (req, res) => {
+    try {
+        const jsonData = req.body;
+        const result = await shareTodoRead(jsonData);
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({ error: '공유 가져오기' });
+    }
+})
+//공유데이터 삭제하기
+app.patch('/todo.share.get', async (req, res) => {
+    try {
+        const loginID = req.query.loginID
+        const jsonData = req.body;
+        const result = await shareTodoImportAndDelete(loginID, jsonData);
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({ error: '내 Todo로 등록' });
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //logout
 app.post('/todo.logout', async (req, res) => {

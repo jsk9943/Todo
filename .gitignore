@@ -2,6 +2,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=react,node
 /server/storage
 /server/member
+/server/share
+/client/build
 /tempFile
 ### Node ###
 # Logs

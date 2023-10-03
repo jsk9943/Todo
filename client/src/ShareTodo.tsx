@@ -22,9 +22,9 @@ type TodoContents = {
 }
 
 type ShareContents = {
-    loginId: string,
-    shareId: string,
-    formattedDate: string,
+    loginID: string,
+    shareID: string,
+    selectedDate: string,
     todoData: {
         title: string,
         period: string,
@@ -40,7 +40,7 @@ interface ShareTodoProps {
 
 const ShareTodo: FC<ShareTodoProps> = ({ state, setShareOpen }) => {
     const [cookies] = useCookies(['token']);
-    const [shareId, setShareId] = useState<string>('');
+    const [shareID, setShareID] = useState<string>('');
     const [idCheck, setidCheck] = useState<boolean>(null);
     const draggingRef = useRef(false);
     const mouseDownTargetRef = useRef<EventTarget | null>(null);
@@ -62,12 +62,20 @@ const ShareTodo: FC<ShareTodoProps> = ({ state, setShareOpen }) => {
         }
     };
     //공유 아이디 체크
-    const shareIdCheck = async (shareId: string): Promise<void> => {
-        const response = await axios.get(`${process.env.REACT_APP_SERVER}/todo.share?shareId=${shareId}`);
+    const shareIdCheck = async (shareID: string): Promise<void> => {
+        if(shareID === cookies.token.loginID){
+            setidCheck(false);
+            return;
+        }
+        const response = await axios.get(`${process.env.REACT_APP_SERVER}/todo.share?shareID=${shareID}`);
         setidCheck(response.data);
     }
     //공유하기
     const shareTodoSend = async (): Promise<void> => {
+        if(shareID === cookies.token.loginID){
+            alert('공유 할 아이디가 자기 자신 일 수 없습니다');
+            return;
+        }
         if (!idCheck) {
             alert('공유 할 아이디가 확인되지 않았습니다');
             return;
@@ -97,17 +105,17 @@ const ShareTodo: FC<ShareTodoProps> = ({ state, setShareOpen }) => {
             }
             validityConfirm(validityConfirmData);
         }
-        const shareConfirm = window.confirm(`${shareId}님에게 ${state.shareData.todoData.title}을 공유 하시겠습니까?`);
+        const shareConfirm = window.confirm(`${shareID}님에게 ${state.shareData.todoData.title}을 공유 하시겠습니까?`);
         if (shareConfirm) {
             const shareData: ShareContents = {
-                loginId: loginID,
-                shareId: shareId,
-                formattedDate: state.shareData.formattedDate,
+                loginID: loginID,
+                shareID: shareID,
+                selectedDate: state.shareData.formattedDate,
                 todoData: {
                     title: state.shareData.todoData.title,
                     period: state.shareData.todoData.period,
                     content: state.shareData.todoData.content,
-                    state: state.shareData.todoData.state,
+                    state: state.shareData.todoData.state ? state.shareData.todoData.state : "",
                 }
             }
             const response = await axios.post(`${process.env.REACT_APP_SERVER}/todo.share`, shareData, {
@@ -152,9 +160,9 @@ const ShareTodo: FC<ShareTodoProps> = ({ state, setShareOpen }) => {
                         <div className={`share-todo-state ${state.shareData.todoData.state === 'New' ? 'New' : state.shareData.todoData.state === 'Progress' ? 'Progress' : state.shareData.todoData.state === 'Complete' ? 'Complete' : ''}`}>{state.shareData.todoData.state}</div>
                         <div className='share-with'>Share with</div>
                         <div className='share-with-input'>
-                            <input className='share-with-id' type="text" placeholder='공유 할 대상 ID 입력' onChange={(e) => { setShareId(e.target.value); shareIdCheck(e.target.value); }} />
+                            <input className='share-with-id' type="text" placeholder='공유 할 대상 ID 입력' onChange={(e) => { setShareID(e.target.value); shareIdCheck(e.target.value); }} />
                         </div>
-                        <div className={`${shareId ? 'id-check' : 'id-noCheck'} ${idCheck ? 'exist' : 'no-exist'}`}>{idCheck ? '공유 가능한 아이디 입니다' : '공유 할 수 없는 아이디 입니다'}</div>
+                        <div className={`${shareID ? 'id-check' : 'id-noCheck'} ${idCheck ? 'exist' : 'no-exist'}`}>{idCheck ? '공유 가능한 아이디 입니다' : '공유 할 수 없는 아이디 입니다'}</div>
                         <div className='share-button'>
                             <FaShare onClick={shareTodoSend} />
                         </div>
